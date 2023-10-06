@@ -30,9 +30,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    interstitialAdManager.loadAd();
-    nativeTemplateAdManager.loadAd(context);
-    nativeFactoryAdManager.loadAd(context);
   }
 
   void _incrementCounter() {
@@ -59,44 +56,47 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                SizedBox(
-                    height: MediaQuery.of(context).size.width *
-                        _adAspectRatioMedium,
-                    width: MediaQuery.of(context).size.width),
-                if (Provider.of<AdProvider>(context).nativeTemplateAdIsLoaded &&
-                    nativeTemplateAdManager.nativeAd != null)
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.width *
-                        _adAspectRatioMedium,
-                    width: MediaQuery.of(context).size.width,
-                    child: AdWidget(ad: nativeTemplateAdManager.nativeAd!),
-                  ),
-              ],
-            ),
-            GestureDetector(
-              onTap: () {
-                nativeTemplateAdManager.loadAd(context);
-                nativeFactoryAdManager.loadAd(context);
-              },
-              child: Container(
-                padding: EdgeInsets.all(20),
-                color: Colors.amber,
-                child: const Text("Refresh Ad"),
+                      height: MediaQuery.of(context).size.width *
+                          _adAspectRatioMedium,
+                      width: MediaQuery.of(context).size.width),
+                  if (Provider.of<AdProvider>(context)
+                          .nativeTemplateAdIsLoaded &&
+                      nativeTemplateAdManager.nativeAd != null)
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width *
+                          _adAspectRatioMedium,
+                      width: MediaQuery.of(context).size.width,
+                      child: AdWidget(ad: nativeTemplateAdManager.nativeAd!),
+                    ),
+                ],
               ),
-            ),
-            if (Provider.of<AdProvider>(context).nativeFactoryAdIsLoaded &&
-                nativeFactoryAdManager.nativeAd != null)
-              SizedBox(
-                height: 200,
-                width: MediaQuery.of(context).size.width,
-                child: AdWidget(ad: nativeFactoryAdManager.nativeAd!),
+              GestureDetector(
+                onTap: () {
+                  nativeTemplateAdManager.loadAd(context);
+                  nativeFactoryAdManager.loadAd(context);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(20),
+                  color: Colors.amber,
+                  child: const Text("Refresh Ad"),
+                ),
               ),
-            if (_versionString != null) Text(_versionString!)
-          ],
+              if (Provider.of<AdProvider>(context).nativeFactoryAdIsLoaded &&
+                  nativeFactoryAdManager.nativeAd != null)
+                SizedBox(
+                  height: 800,
+                  width: MediaQuery.of(context).size.width,
+                  child: AdWidget(ad: nativeFactoryAdManager.nativeAd!),
+                ),
+              if (_versionString != null) Text(_versionString!)
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

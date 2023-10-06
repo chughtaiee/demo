@@ -47,9 +47,7 @@ class NativeAdFactoryExample: NativeAdFactory {
     adView.bodyView = adView.findViewById(R.id.ad_body)
     adView.callToActionView = adView.findViewById(R.id.ad_call_to_action)
     adView.iconView = adView.findViewById(R.id.ad_app_icon)
-    adView.priceView = adView.findViewById(R.id.ad_price)
     adView.starRatingView = adView.findViewById(R.id.ad_stars)
-    adView.storeView = adView.findViewById(R.id.ad_store)
     adView.advertiserView = adView.findViewById(R.id.ad_advertiser)
     
     // The headline and mediaContent are guaranteed to be in every NativeAd.
@@ -58,12 +56,6 @@ class NativeAdFactoryExample: NativeAdFactory {
 
     // These assets aren't guaranteed to be in every NativeAd, so it's important to
     // check before trying to display them.
-    if (nativeAd?.body == null) {
-      adView.bodyView?.visibility = View.INVISIBLE
-    } else {
-      adView.bodyView?.visibility = View.VISIBLE
-      (adView.bodyView as TextView).text = nativeAd.body
-    }
 
     if (nativeAd?.callToAction == null) {
       adView.callToActionView?.visibility = View.INVISIBLE
@@ -79,32 +71,12 @@ class NativeAdFactoryExample: NativeAdFactory {
       adView.iconView?.visibility = View.VISIBLE
     }
 
-    if (nativeAd?.price == null) {
-      adView.priceView?.visibility = View.INVISIBLE
-    } else {
-      adView.priceView?.visibility = View.VISIBLE
-      (adView.priceView as TextView).text = nativeAd.price
-    }
 
-    if (nativeAd?.store == null) {
-      adView.storeView?.visibility = View.INVISIBLE
-    } else {
-      adView.storeView?.visibility = View.VISIBLE
-      (adView.storeView as TextView).text = nativeAd.store
-    }
-
-    if (nativeAd?.starRating == null) {
-      adView.starRatingView?.visibility = View.INVISIBLE
-    } else {
-      (adView.starRatingView as RatingBar).rating = nativeAd.starRating!!.toFloat()
-      adView.starRatingView?.visibility = View.VISIBLE
-    }
-
-    if (nativeAd?.advertiser == null) {
+    if (nativeAd?.body == null) {
       adView.advertiserView?.visibility = View.INVISIBLE
     } else {
       adView.advertiserView?.visibility = View.VISIBLE
-      (adView.advertiserView as TextView).text = nativeAd.advertiser
+      (adView.advertiserView as TextView).text = nativeAd.body
     }
 
     // This method tells the Google Mobile Ads SDK that you have finished populating your
